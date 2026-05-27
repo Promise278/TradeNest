@@ -5,7 +5,7 @@ const cloudinary = require("../config/cloudinary");
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "lunavest_products",
+    folder: "tradenest_products",
     allowed_formats: ["jpg", "png", "jpeg", "webp"],
   },
 });
