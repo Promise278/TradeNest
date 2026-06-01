@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.84.1",
-    "expo": "^56.0.8",
     "nativewind": "^4.2.2",
     "react": "19.2.3",
     "react-native": "0.84.1",
