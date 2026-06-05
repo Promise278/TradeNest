@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Users.hasMany(models.Products, {
+        foreignKey: "UserId",
+        // as: "lands"
+      });
     }
   }
   Users.init(
@@ -35,10 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("user", "admin", "seller"),
         defaultValue: "user",
       },
-    }, {
+    },
+    {
       sequelize,
       modelName: "Users",
-      tableName: "User"
+      tableName: "User",
     },
   );
   return Users;

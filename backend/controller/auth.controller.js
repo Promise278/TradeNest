@@ -76,18 +76,37 @@ async function login(req, res) {
 
     const user = await Users.findOne({
       where: { email },
-      attributes: ["id", "name", "email", "password", "role"],
+      attributes: [
+        "id",
+        "fullname",
+        "email",
+        "password",
+        "role",
+        "isVerified",
+        "lastLogin",
+      ],
     });
-    if (!user || !bcrypt.compareSync(password, user.password)) {
+    if (!user) {
       return res.status(401).json({
         success: false,
         message: "Invalid email or password",
       });
     }
 
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    await Users.update({ lastLogin: new Date() }, { where: { id: user.id } });
+
     const payload = {
       id: user.id,
-      name: user.name,
+      name: user.fullname,
       email: user.email,
       role: user.role,
       time: Date.now(),

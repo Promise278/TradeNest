@@ -1,40 +1,64 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable("Products", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
-      id: {
-        type: Sequelize.UUID
+      sellerId: {
+        type: Sequelize.UUID,
+        allowNull: false,
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL(12, 2),
+        allowNull: false,
       },
       category: {
-        type: Sequelize.ENUM
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      stock: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
+      condition: {
+        type: Sequelize.ENUM("new", "used", "refurbished"),
+        defaultValue: "new",
+      },
+      location: {
+        type: Sequelize.STRING,
+      },
+      status: {
+        type: Sequelize.ENUM("available", "sold", "inactive"),
+        defaultValue: "available",
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products');
-  }
+    await queryInterface.dropTable("Products");
+  },
 };
