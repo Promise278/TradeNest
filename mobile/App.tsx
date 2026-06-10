@@ -1,23 +1,36 @@
-import React, { useState } from "react";
-import { Text, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import Onboarding from "./components/Onboarding";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import Onboarding from './components/Onboarding';
+import SignIn from './src/screens/SignIn';
+import SignUp from './src/screens/SignUp';
+import Home from './src/screens/Home';
+
+export type RootStackParamList = {
+  Onboarding: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
+  Home: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
-
   return (
     <SafeAreaProvider>
-      {hasCompletedOnboarding ? (
-        <View className="flex-1 items-center justify-center bg-[#F8FAF6] px-6">
-          <Text className="text-3xl font-black text-slate-950">Welcome to TradeNest</Text>
-          <Text className="mt-3 text-center text-base font-medium leading-7 text-slate-500">
-            Your product marketplace is ready.
-          </Text>
-        </View>
-      ) : (
-        <Onboarding onComplete={() => setHasCompletedOnboarding(true)} />
-      )}
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Onboarding"
+          screenOptions={{ headerShown: false, animation: 'slide_from_right' }}
+        >
+          <Stack.Screen name="Onboarding" component={Onboarding} />
+          <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }

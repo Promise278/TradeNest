@@ -1,20 +1,57 @@
 "use strict";
+
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
       Users.hasMany(models.Products, {
-        foreignKey: "UserId",
-        // as: "lands"
+        foreignKey: "sellerId",
+        as: "products",
+      });
+      Users.hasMany(models.Addresses, {
+        foreignKey: "userId",
+        as: "addresses",
+      });
+      Users.hasMany(models.Orders, {
+        foreignKey: "userId",
+        as: "orders",
+      });
+      Users.hasMany(models.OrderItems, {
+        foreignKey: "sellerId",
+        as: "sales",
+      });
+      Users.hasMany(models.CartItems, {
+        foreignKey: "userId",
+        as: "cartItems",
+      });
+      Users.hasMany(models.Wishlists, {
+        foreignKey: "userId",
+        as: "wishlists",
+      });
+      Users.hasMany(models.Reviews, {
+        foreignKey: "userId",
+        as: "reviews",
+      });
+      Users.hasMany(models.Messages, {
+        foreignKey: "senderId",
+        as: "sentMessages",
+      });
+      Users.hasMany(models.Messages, {
+        foreignKey: "recipientId",
+        as: "receivedMessages",
+      });
+      Users.hasMany(models.Notifications, {
+        foreignKey: "userId",
+        as: "notifications",
+      });
+      Users.hasMany(models.Payments, {
+        foreignKey: "userId",
+        as: "payments",
       });
     }
   }
+
   Users.init(
     {
       id: {
@@ -43,8 +80,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Users",
-      tableName: "User",
-    },
+      tableName: "Users",
+    }
   );
+
   return Users;
 };

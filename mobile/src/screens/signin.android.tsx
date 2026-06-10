@@ -1,10 +1,2 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-
-export default function Signin() {
-  return (
-    <View>
-      <Text>signin.android</Text>
-    </View>
-  )
-}
+// Shared implementation — see SignIn.tsx
+export { default } from './SignIn';
